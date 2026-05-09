@@ -123,3 +123,15 @@ _nenhuma_
 - [x] Migrações embedded no binário Go (sem TimescaleDB, PostgreSQL puro)
 - [x] GitHub webhook → Coolify (auto-deploy a cada push na main)
 - [x] Super Admin seed: superadmin@crmmagico.local / Admin@12345
+
+### Sprint 3 — CRUD & WhatsApp Service
+- [x] CRUD de empresas: GET/POST/PATCH/DELETE /v1/super-admin/companies
+- [x] CRUD de usuários: GET/POST/DELETE/PATCH /v1/admin/users
+- [x] CRUD de departamentos: GET/POST/DELETE /v1/admin/departments
+- [x] WhatsApp Service (Node.js/Hono) deployado — running:healthy
+- [x] Evolution API integration layer (createInstance, sendText, sendMedia, getQrCode)
+- [x] Webhook /v1/webhook/evolution/:accountId (inbound events)
+- [x] Auto-discovery de contatos ao receber mensagem inbound
+- [x] Redis pub/sub para eventos de mensagem
+- [ ] Configurar Evolution API no servidor (container)
+- [ ] Testar fluxo end-to-end WhatsApp (QR code → mensagem)
