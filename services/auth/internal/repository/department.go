@@ -2,11 +2,9 @@ package repository
 
 import (
 	"context"
-	"errors"
 
 	"github.com/crm-magico/auth/internal/model"
 	"github.com/google/uuid"
-	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
