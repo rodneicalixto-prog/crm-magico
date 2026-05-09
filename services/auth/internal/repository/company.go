@@ -23,8 +23,8 @@ func (r *CompanyRepository) Create(ctx context.Context, c *model.Company) error 
 	return r.db.QueryRow(ctx, `
 		INSERT INTO companies (id, name, plan, is_active, settings)
 		VALUES ($1, $2, $3, true, '{}')
-		RETURNING created_at, updated_at
-	`, c.ID, c.Name, c.Plan).Scan(&c.CreatedAt, &c.UpdatedAt)
+		RETURNING is_active, created_at, updated_at
+	`, c.ID, c.Name, c.Plan).Scan(&c.IsActive, &c.CreatedAt, &c.UpdatedAt)
 }
 
 func (r *CompanyRepository) FindByID(ctx context.Context, id uuid.UUID) (*model.Company, error) {
