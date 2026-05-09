@@ -26,6 +26,8 @@ _nenhuma_
 - [ ] Redefinição de senha por e-mail
 
 ### 💬 Módulo WhatsApp Multi-conta
+- [x] Evolution API container no Coolify (v1.7.4, atendai/evolution-api)
+- [x] WhatsApp Service configurado com EVOLUTION_API_URL + EVOLUTION_API_KEY
 - [ ] Integração WhatsApp Business API (oficial)
 - [ ] Bridge API não-oficial (whatsapp-web.js/puppeteer)
 - [ ] Evolution Go Integration Layer (gRPC streaming)
@@ -99,12 +101,22 @@ _nenhuma_
 - [ ] Fluentd → ELK (log aggregation)
 
 ### 🖥️ Frontend
-- [ ] SPA React/Vue.js + WebSocket Client
-- [ ] Componentes dinâmicos por permissão (route guards)
-- [ ] Virtual scrolling para listas de conversas
+- [x] SPA React + Vite + TypeScript + TailwindCSS scaffolded
+- [x] Axios com refresh token automático (interceptor)
+- [x] Zustand store persistido para auth (JWT + refresh)
+- [x] Login page (JWT auth)
+- [x] Layout com Sidebar dinâmico por role (RBAC)
+- [x] Dashboard com stats de conversas
+- [x] Kanban board (open/in_progress/waiting/resolved) com move rápido
+- [x] Gestão de Contatos com busca
+- [x] Gestão de Contas WhatsApp (criar, conectar, QR code)
+- [x] Gestão de Equipe (admin) e Empresas (super_admin)
+- [x] Dockerfile multi-stage + nginx SPA fallback
+- [x] Deployed no Coolify — https://app.sosbot.online
+- [ ] WebSocket real-time (conversas/mensagens)
+- [ ] Virtual scrolling para listas longas
 - [ ] Offline-first (IndexedDB + Service Workers)
-- [ ] Admin Panel (app React separado)
-- [ ] Dynamic menu por role
+- [ ] Export PDF/Excel
 
 ## Concluído
 
@@ -133,5 +145,5 @@ _nenhuma_
 - [x] Webhook /v1/webhook/evolution/:accountId (inbound events)
 - [x] Auto-discovery de contatos ao receber mensagem inbound
 - [x] Redis pub/sub para eventos de mensagem
-- [ ] Configurar Evolution API no servidor (container)
+- [x] Configurar Evolution API no servidor (container v1.7.4 no Coolify)
 - [ ] Testar fluxo end-to-end WhatsApp (QR code → mensagem)
