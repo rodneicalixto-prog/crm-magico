@@ -8,6 +8,7 @@ import (
 
 	"github.com/crm-magico/auth/internal/handler"
 	"github.com/crm-magico/auth/internal/middleware"
+	"github.com/crm-magico/auth/internal/migrate"
 	"github.com/crm-magico/auth/internal/model"
 	"github.com/crm-magico/auth/internal/repository"
 	"github.com/crm-magico/auth/internal/service"
@@ -29,6 +30,10 @@ func main() {
 
 	if err := db.Ping(ctx); err != nil {
 		log.Fatalf("postgres ping: %v", err)
+	}
+
+	if err := migrate.Run(ctx, db); err != nil {
+		log.Fatalf("migrations: %v", err)
 	}
 
 	// ── Redis ────────────────────────────────────────────────────
