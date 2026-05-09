@@ -37,8 +37,9 @@ export const useAuthStore = create<AuthState>()(
       refreshToken: async () => {
         const { refresh } = get()
         if (!refresh) return false
+        const base = import.meta.env.VITE_AUTH_URL ?? '/api/auth'
         try {
-          const res = await fetch('/api/auth/v1/auth/refresh', {
+          const res = await fetch(`${base}/v1/auth/refresh`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ refresh_token: refresh }),
