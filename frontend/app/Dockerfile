@@ -3,6 +3,12 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+
+ARG VITE_AUTH_URL=https://auth.sosbot.online
+ARG VITE_WA_URL=https://whatsapp.sosbot.online
+ENV VITE_AUTH_URL=$VITE_AUTH_URL
+ENV VITE_WA_URL=$VITE_WA_URL
+
 RUN npm run build
 
 FROM nginx:alpine
