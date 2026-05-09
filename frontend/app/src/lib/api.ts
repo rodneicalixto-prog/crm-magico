@@ -1,10 +1,8 @@
 import axios from 'axios'
 import { useAuthStore } from '../store/auth'
 
-// Empty string → axios uses relative paths (nginx proxies internally via Docker network)
-// External URL → direct HTTPS calls
-const AUTH_BASE = import.meta.env.VITE_AUTH_URL || ''
-const WA_BASE   = import.meta.env.VITE_WA_URL   || ''
+const AUTH_BASE = import.meta.env.VITE_AUTH_URL || 'https://auth.sosbot.online'
+const WA_BASE   = import.meta.env.VITE_WA_URL   || 'https://whatsapp.sosbot.online'
 
 function makeClient(baseURL: string) {
   const client = axios.create({ baseURL })

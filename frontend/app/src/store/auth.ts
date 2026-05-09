@@ -37,7 +37,7 @@ export const useAuthStore = create<AuthState>()(
       refreshToken: async () => {
         const { refresh } = get()
         if (!refresh) return false
-        const base = import.meta.env.VITE_AUTH_URL || ''
+        const base = import.meta.env.VITE_AUTH_URL || 'https://auth.sosbot.online'
         try {
           const res = await fetch(`${base}/v1/auth/refresh`, {
             method: 'POST',
