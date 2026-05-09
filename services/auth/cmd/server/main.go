@@ -47,7 +47,10 @@ func main() {
 	}
 
 	// ── Wiring ───────────────────────────────────────────────────
-	userRepo := repository.NewUserRepository(db)
+	userRepo    := repository.NewUserRepository(db)
+	companyRepo := repository.NewCompanyRepository(db)
+	deptRepo    := repository.NewDepartmentRepository(db)
+
 	authSvc := service.NewAuthService(
 		userRepo,
 		rdb,
@@ -55,7 +58,8 @@ func main() {
 		parseDuration("JWT_EXPIRY", 15*time.Minute),
 		parseDuration("REFRESH_EXPIRY", 7*24*time.Hour),
 	)
-	authHandler := handler.NewAuthHandler(authSvc)
+	authHandler  := handler.NewAuthHandler(authSvc)
+	adminHandler := handler.NewAdminHandler(userRepo, companyRepo, deptRepo)
 
 	// ── Router ───────────────────────────────────────────────────
 	if os.Getenv("ENV") == "production" {
@@ -81,21 +85,29 @@ func main() {
 			auth.GET("/validate", authHandler.ValidateToken)
 		}
 
-		// Rotas protegidas por role — exemplos de uso do RBAC
+		// ── Admin (company_admin+) ───────────────────────────────
 		admin := v1.Group("/admin")
 		admin.Use(middleware.Auth(authSvc), middleware.RequireRole(model.RoleCompanyAdmin))
 		{
-			admin.GET("/users", func(c *gin.Context) {
-				c.JSON(200, gin.H{"message": "lista de usuários — implementar"})
-			})
+			admin.GET("/users", adminHandler.ListUsers)
+			admin.POST("/users", adminHandler.CreateUser)
+			admin.DELETE("/users/:id", adminHandler.DeactivateUser)
+			admin.PATCH("/users/:id/role", adminHandler.ChangeUserRole)
+
+			admin.GET("/departments", adminHandler.ListDepartments)
+			admin.POST("/departments", adminHandler.CreateDepartment)
+			admin.DELETE("/departments/:id", adminHandler.DeleteDepartment)
 		}
 
+		// ── Super Admin ──────────────────────────────────────────
 		superAdmin := v1.Group("/super-admin")
 		superAdmin.Use(middleware.Auth(authSvc), middleware.RequireRole(model.RoleSuperAdmin))
 		{
-			superAdmin.GET("/companies", func(c *gin.Context) {
-				c.JSON(200, gin.H{"message": "lista de empresas — implementar"})
-			})
+			superAdmin.GET("/companies", adminHandler.ListCompanies)
+			superAdmin.POST("/companies", adminHandler.CreateCompany)
+			superAdmin.GET("/companies/:id", adminHandler.GetCompany)
+			superAdmin.PATCH("/companies/:id", adminHandler.UpdateCompany)
+			superAdmin.DELETE("/companies/:id", adminHandler.DeleteCompany)
 		}
 	}
 

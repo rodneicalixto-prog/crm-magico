@@ -53,12 +53,14 @@ type Company struct {
 	Plan      string    `json:"plan" db:"plan"`
 	IsActive  bool      `json:"is_active" db:"is_active"`
 	CreatedAt time.Time `json:"created_at" db:"created_at"`
+	UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
 }
 
 type Department struct {
 	ID        uuid.UUID `json:"id" db:"id"`
 	CompanyID uuid.UUID `json:"company_id" db:"company_id"`
 	Name      string    `json:"name" db:"name"`
+	IsActive  bool      `json:"is_active" db:"is_active"`
 	CreatedAt time.Time `json:"created_at" db:"created_at"`
 }
 
