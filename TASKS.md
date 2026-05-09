@@ -9,8 +9,9 @@ _nenhuma_
 - [x] Definir stack definitiva (Python/Node.js/Go/Java Spring por serviço)
 - [x] Configurar monorepo
 - [x] Setup Docker Compose para dev local (PostgreSQL+TimescaleDB, Redis, Kafka, Elasticsearch, Prometheus, Grafana)
+- [x] Deploy em produção via Coolify (PostgreSQL + Redis + Auth Service)
+- [x] CI/CD automático via GitHub webhook → Coolify
 - [ ] Setup Kubernetes para produção
-- [ ] Configurar CI/CD pipeline
 
 ### 🔐 Autenticação & Hierarquia
 - [x] Auth Service em Go com JWT + RBAC (estrutura completa)
@@ -18,6 +19,8 @@ _nenhuma_
 - [x] Middleware RequireRole + SameCompany (bloqueio cross-tenant)
 - [x] Log de acessos (tabela access_logs particionada)
 - [x] Token rotation (refresh token revogado a cada uso via Redis)
+- [x] Migrações automáticas embedded (Go embed + schema_migrations)
+- [x] Auth Service rodando em produção: https://auth.sosbot.online
 - [ ] 2FA TOTP real (integrar pquerna/otp — placeholder criado)
 - [ ] Session management (simultâneas controladas)
 - [ ] Redefinição de senha por e-mail
@@ -109,6 +112,14 @@ _nenhuma_
 - [x] Estrutura do monorepo (`services/`, `frontend/`, `infra/`, `migrations/`)
 - [x] `docker-compose.yml` (PostgreSQL+TimescaleDB, Redis, Kafka+Zookeeper, Elasticsearch, Prometheus, Grafana)
 - [x] Auth Service Go: models, repository, service, handler, middleware RBAC
-- [x] Migrações PostgreSQL: companies, departments, users, access_logs, whatsapp_accounts, contacts, conversations, messages, metric_events (TimescaleDB hypertable)
+- [x] Migrações PostgreSQL: companies, departments, users, access_logs, whatsapp_accounts, contacts, conversations, messages, metric_events
 - [x] Makefile com comandos de dev (`make setup`, `make auth-dev`, `make db-shell`, etc.)
 - [x] `.env.example`
+
+### Sprint 2 — Deploy Produção
+- [x] PostgreSQL (postgres:14-alpine) no Coolify — running:healthy
+- [x] Redis (redis:7-alpine) no Coolify — running:healthy
+- [x] Auth Service deployado em https://auth.sosbot.online — running:healthy
+- [x] Migrações embedded no binário Go (sem TimescaleDB, PostgreSQL puro)
+- [x] GitHub webhook → Coolify (auto-deploy a cada push na main)
+- [x] Super Admin seed: superadmin@crmmagico.local / Admin@12345
