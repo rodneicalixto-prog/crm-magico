@@ -22,7 +22,7 @@ export const accountRepo = {
 
   async create(data: {
     company_id: string
-    phone_number: string
+    phone_number?: string | null
     display_name?: string
     account_type: string
     is_shared?: boolean
@@ -30,7 +30,7 @@ export const accountRepo = {
     const { rows } = await pool.query<WaAccount>(
       `INSERT INTO whatsapp_accounts (company_id, phone_number, display_name, account_type, is_shared)
        VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-      [data.company_id, data.phone_number, data.display_name ?? null,
+      [data.company_id, data.phone_number || null, data.display_name ?? null,
        data.account_type, data.is_shared ?? false]
     )
     return rows[0]
