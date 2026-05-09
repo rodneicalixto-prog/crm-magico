@@ -16,7 +16,7 @@ export default function Login() {
     setLoading(true)
     try {
       const { data } = await authApi.post('/v1/auth/login', { email, password })
-      setTokens(data.access_token, data.refresh_token)
+      setTokens(data.tokens.access_token, data.tokens.refresh_token)
       setUser(data.user)
       navigate('/')
     } catch (err: unknown) {

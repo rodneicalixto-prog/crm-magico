@@ -46,7 +46,7 @@ export const useAuthStore = create<AuthState>()(
           })
           if (!res.ok) return false
           const data = await res.json()
-          set({ token: data.access_token, refresh: data.refresh_token })
+          set({ token: data.tokens?.access_token, refresh: data.tokens?.refresh_token })
           return true
         } catch {
           return false
