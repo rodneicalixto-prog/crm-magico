@@ -1,12 +1,13 @@
 import { Hono } from 'hono'
 import { zValidator } from '@hono/zod-validator'
 import { z } from 'zod'
-import { authMiddleware, requireRole } from '../middleware/auth.js'
+import { authMiddleware, requireRole, type JwtClaims } from '../middleware/auth.js'
 import { accountRepo } from '../repositories/account.repo.js'
 import { messageService } from '../services/message.service.js'
 import { env } from '../config/env.js'
 
-const app = new Hono()
+type Env = { Variables: { claims: JwtClaims } }
+const app = new Hono<Env>()
 app.use('*', authMiddleware)
 
 const createSchema = z.object({

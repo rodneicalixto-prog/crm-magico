@@ -32,11 +32,11 @@ export const authMiddleware = createMiddleware<{ Variables: { claims: JwtClaims 
 )
 
 export const requireRole = (minRole: string) =>
-  createMiddleware(async (c, next) => {
+  createMiddleware<{ Variables: { claims: JwtClaims } }>(async (c, next) => {
     const roleLevel: Record<string, number> = {
       operational: 1, supervisor: 2, company_admin: 3, super_admin: 4,
     }
-    const claims = c.get('claims') as JwtClaims
+    const claims = c.get('claims')
     if ((roleLevel[claims?.role] ?? 0) < (roleLevel[minRole] ?? 99)) {
       return c.json({ error: 'forbidden' }, 403)
     }
