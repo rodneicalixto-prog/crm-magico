@@ -1,0 +1,26 @@
+﻿# Env
+.env
+.env.*
+!.env.example
+
+# Go
+services/auth/vendor/
+*.exe
+*.test
+
+# Node
+node_modules/
+dist/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Docker volumes / runtime
+*.log
+tmp/
+
+# OS
+.DS_Store
+Thumbs.db
