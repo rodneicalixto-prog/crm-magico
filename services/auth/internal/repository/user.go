@@ -25,8 +25,8 @@ func (r *UserRepository) FindByEmail(ctx context.Context, email string) (*model.
 	u := &model.User{}
 	err := r.db.QueryRow(ctx, `
 		SELECT id, company_id, department_id, email, password_hash,
-		       role, two_fa_enabled, two_fa_secret, is_active,
-		       last_login_at, last_login_ip, created_at, updated_at
+		       role, two_fa_enabled, COALESCE(two_fa_secret, ''), is_active,
+		       last_login_at, COALESCE(last_login_ip, ''), created_at, updated_at
 		FROM users WHERE email = $1 AND is_active = true
 	`, email).Scan(
 		&u.ID, &u.CompanyID, &u.DepartmentID, &u.Email, &u.PasswordHash,
@@ -43,8 +43,8 @@ func (r *UserRepository) FindByID(ctx context.Context, id uuid.UUID) (*model.Use
 	u := &model.User{}
 	err := r.db.QueryRow(ctx, `
 		SELECT id, company_id, department_id, email, password_hash,
-		       role, two_fa_enabled, two_fa_secret, is_active,
-		       last_login_at, last_login_ip, created_at, updated_at
+		       role, two_fa_enabled, COALESCE(two_fa_secret, ''), is_active,
+		       last_login_at, COALESCE(last_login_ip, ''), created_at, updated_at
 		FROM users WHERE id = $1
 	`, id).Scan(
 		&u.ID, &u.CompanyID, &u.DepartmentID, &u.Email, &u.PasswordHash,
